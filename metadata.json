@@ -1,0 +1,6 @@
+{
+  "name": "Golden Hour Coffee Co.",
+  "description": "A cozy, sunlit, and plant-filled neighborhood brunch cafe prototype located in East Austin, Texas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
