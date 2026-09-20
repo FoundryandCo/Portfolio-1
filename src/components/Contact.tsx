@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapPin, Clock, Phone, Mail, Send, CheckCircle, Navigation } from 'lucide-react';
+import { MapPin, Clock, Phone, Send, CheckCircle, Navigation } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function Contact() {
@@ -11,17 +11,28 @@ export default function Contact() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field as keyof typeof errors]) {
+      setErrors(prev => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  const validate = () => {
+    const newErrors: typeof errors = {};
+    if (!formData.name.trim()) newErrors.name = 'Please enter your name.';
+    if (!formData.email.trim()) newErrors.email = 'Please enter your email address.';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Please enter a valid email address.';
+    if (!formData.message.trim()) newErrors.message = 'Please enter a message.';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) {
-      alert('Please fill out all the fields before sending your message.');
-      return;
-    }
+    if (!validate()) return;
     setIsSubmitting(true);
     // Simulate API request
     setTimeout(() => {
@@ -44,7 +55,7 @@ export default function Contact() {
           <h1 className="font-script text-5xl md:text-6xl font-bold text-terracotta mb-4">
             Contact Us
           </h1>
-          <p className="text-espresso/70 text-sm max-w-md mx-auto">
+          <p className="text-espresso/80 text-sm max-w-md mx-auto">
             Got questions, special requests, or just want to tell us about your morning? Drop us a line!
           </p>
         </div>
@@ -186,51 +197,58 @@ export default function Contact() {
                 Send a Message
               </h2>
 
+              <div aria-live="polite">
               <form onSubmit={handleSubmit} className="space-y-5">
                 
                 {/* NAME */}
                 <div className="space-y-2">
-                  <label className="text-xs font-bold tracking-wider uppercase text-cream/90">
+                  <label htmlFor="contact-name" className="text-xs font-bold tracking-wider uppercase text-cream/90">
                     Your Name
                   </label>
                   <input
+                    id="contact-name"
                     type="text"
                     placeholder="Jordan Ellis"
                     value={formData.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
-                    className="w-full px-4 py-3 bg-cream text-espresso rounded-2xl border border-cream/25 placeholder-espresso/40 focus:outline-none focus:ring-2 focus:ring-burnt-orange font-medium text-sm"
+                    className={`w-full px-4 py-3 bg-cream text-espresso rounded-2xl border placeholder-espresso/40 focus:outline-none focus:ring-2 focus:ring-burnt-orange font-medium text-sm ${errors.name ? 'border-red-500 focus:ring-red-500' : 'border-cream/25'}`}
                     required
                   />
+                  {errors.name && <p className="text-xs text-red-500 font-medium">{errors.name}</p>}
                 </div>
 
                 {/* EMAIL */}
                 <div className="space-y-2">
-                  <label className="text-xs font-bold tracking-wider uppercase text-cream/90">
+                  <label htmlFor="contact-email" className="text-xs font-bold tracking-wider uppercase text-cream/90">
                     Email Address
                   </label>
                   <input
+                    id="contact-email"
                     type="email"
                     placeholder="jordan@example.com"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
-                    className="w-full px-4 py-3 bg-cream text-espresso rounded-2xl border border-cream/25 placeholder-espresso/40 focus:outline-none focus:ring-2 focus:ring-burnt-orange font-medium text-sm"
+                    className={`w-full px-4 py-3 bg-cream text-espresso rounded-2xl border placeholder-espresso/40 focus:outline-none focus:ring-2 focus:ring-burnt-orange font-medium text-sm ${errors.email ? 'border-red-500 focus:ring-red-500' : 'border-cream/25'}`}
                     required
                   />
+                  {errors.email && <p className="text-xs text-red-500 font-medium">{errors.email}</p>}
                 </div>
 
                 {/* MESSAGE */}
                 <div className="space-y-2">
-                  <label className="text-xs font-bold tracking-wider uppercase text-cream/90">
+                  <label htmlFor="contact-message" className="text-xs font-bold tracking-wider uppercase text-cream/90">
                     Message
                   </label>
                   <textarea
+                    id="contact-message"
                     rows={4}
                     placeholder="Ask about catering, private events, or just say hello..."
                     value={formData.message}
                     onChange={(e) => handleInputChange('message', e.target.value)}
-                    className="w-full px-4 py-3 bg-cream text-espresso rounded-2xl border border-cream/25 placeholder-espresso/40 focus:outline-none focus:ring-2 focus:ring-burnt-orange font-medium text-sm"
+                    className={`w-full px-4 py-3 bg-cream text-espresso rounded-2xl border placeholder-espresso/40 focus:outline-none focus:ring-2 focus:ring-burnt-orange font-medium text-sm ${errors.message ? 'border-red-500 focus:ring-red-500' : 'border-cream/25'}`}
                     required
                   />
+                  {errors.message && <p className="text-xs text-red-500 font-medium">{errors.message}</p>}
                 </div>
 
                 {/* SUBMIT BUTTON WITH SAGE ACCENT */}
@@ -261,6 +279,9 @@ export default function Contact() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="Message sent successfully"
                     className="absolute inset-0 bg-sage text-cream p-8 rounded-[32px] flex flex-col items-center justify-center text-center space-y-4"
                   >
                     <CheckCircle size={48} className="animate-bounce" />
@@ -277,6 +298,7 @@ export default function Contact() {
                   </motion.div>
                 )}
               </AnimatePresence>
+              </div>
 
             </div>
           </div>

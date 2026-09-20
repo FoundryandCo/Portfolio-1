@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, Users, MessageSquare, Phone, CheckCircle, Gift, Heart } from 'lucide-react';
+import { Calendar, Clock, Users, MessageSquare, Phone, CheckCircle, Gift } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function Reservations() {
@@ -14,6 +14,7 @@ export default function Reservations() {
 
   const [submitted, setSubmitted] = useState(false);
   const [bookingRef, setBookingRef] = useState('');
+  const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
 
   const timeSlots = [
     '7:30 AM', '8:30 AM', '9:30 AM', '10:30 AM', 
@@ -27,14 +28,19 @@ export default function Reservations() {
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field as keyof typeof errors]) {
+      setErrors(prev => ({ ...prev, [field]: undefined }));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email) {
-      alert('Please fill out your name and email address so we can secure your reservation.');
-      return;
-    }
+    const newErrors: typeof errors = {};
+    if (!formData.name.trim()) newErrors.name = 'Please enter your name.';
+    if (!formData.email.trim()) newErrors.email = 'Please enter your email address.';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Please enter a valid email address.';
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
     // Generate a beautiful mock booking reference code (e.g., GH-9241)
     const randomNum = Math.floor(1000 + Math.random() * 9000);
     setBookingRef(`GH-${randomNum}`);
@@ -53,7 +59,7 @@ export default function Reservations() {
           <h1 className="font-script text-5xl md:text-6xl font-bold text-terracotta mb-4">
             Table Reservations
           </h1>
-          <p className="text-espresso/70 text-sm max-w-md mx-auto">
+          <p className="text-espresso/80 text-sm max-w-md mx-auto">
             Book your spot for slow mornings and strong coffee in East Austin. We look forward to welcoming you!
           </p>
         </div>
@@ -91,10 +97,11 @@ export default function Reservations() {
                   
                   {/* DATE FIELD */}
                   <div className="space-y-2">
-                    <label className="text-xs font-bold tracking-wider uppercase text-cream/90 flex items-center gap-1.5">
+                    <label htmlFor="res-date" className="text-xs font-bold tracking-wider uppercase text-cream/90 flex items-center gap-1.5">
                       <Calendar size={14} className="text-cream" /> Date
                     </label>
                     <input
+                      id="res-date"
                       type="date"
                       value={formData.date}
                       onChange={(e) => handleInputChange('date', e.target.value)}
@@ -105,10 +112,11 @@ export default function Reservations() {
 
                   {/* TIME SELECTOR */}
                   <div className="space-y-2">
-                    <label className="text-xs font-bold tracking-wider uppercase text-cream/90 flex items-center gap-1.5">
+                    <label htmlFor="res-time" className="text-xs font-bold tracking-wider uppercase text-cream/90 flex items-center gap-1.5">
                       <Clock size={14} className="text-cream" /> Time
                     </label>
                     <select
+                      id="res-time"
                       value={formData.time}
                       onChange={(e) => handleInputChange('time', e.target.value)}
                       className="w-full px-4 py-3 bg-cream text-espresso rounded-2xl border border-cream/25 focus:outline-none focus:ring-2 focus:ring-burnt-orange font-medium text-sm"
@@ -127,10 +135,11 @@ export default function Reservations() {
                   
                   {/* PARTY SIZE */}
                   <div className="space-y-2">
-                    <label className="text-xs font-bold tracking-wider uppercase text-cream/90 flex items-center gap-1.5">
+                    <label htmlFor="res-guests" className="text-xs font-bold tracking-wider uppercase text-cream/90 flex items-center gap-1.5">
                       <Users size={14} className="text-cream" /> Party Size
                     </label>
                     <select
+                      id="res-guests"
                       value={formData.guests}
                       onChange={(e) => handleInputChange('guests', e.target.value)}
                       className="w-full px-4 py-3 bg-cream text-espresso rounded-2xl border border-cream/25 focus:outline-none focus:ring-2 focus:ring-burnt-orange font-medium text-sm"
@@ -143,42 +152,47 @@ export default function Reservations() {
 
                   {/* NAME */}
                   <div className="space-y-2">
-                    <label className="text-xs font-bold tracking-wider uppercase text-cream/90">
+                    <label htmlFor="res-name" className="text-xs font-bold tracking-wider uppercase text-cream/90">
                       Your Name
                     </label>
                     <input
+                      id="res-name"
                       type="text"
                       placeholder="Maya Chen"
                       value={formData.name}
                       onChange={(e) => handleInputChange('name', e.target.value)}
-                      className="w-full px-4 py-3 bg-cream text-espresso rounded-2xl border border-cream/25 placeholder-espresso/40 focus:outline-none focus:ring-2 focus:ring-burnt-orange font-medium text-sm"
+                      className={`w-full px-4 py-3 bg-cream text-espresso rounded-2xl border placeholder-espresso/40 focus:outline-none focus:ring-2 focus:ring-burnt-orange font-medium text-sm ${errors.name ? 'border-red-500 focus:ring-red-500' : 'border-cream/25'}`}
                       required
                     />
+                    {errors.name && <p className="text-xs text-red-300 font-medium">{errors.name}</p>}
                   </div>
 
                 </div>
 
                 {/* EMAIL ADDRESS */}
                 <div className="space-y-2">
-                  <label className="text-xs font-bold tracking-wider uppercase text-cream/90">
+                  <label htmlFor="res-email" className="text-xs font-bold tracking-wider uppercase text-cream/90">
                     Email Address
                   </label>
                   <input
+                    id="res-email"
                     type="email"
                     placeholder="maya@example.com"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
-                    className="w-full px-4 py-3 bg-cream text-espresso rounded-2xl border border-cream/25 placeholder-espresso/40 focus:outline-none focus:ring-2 focus:ring-burnt-orange font-medium text-sm"
+                    className={`w-full px-4 py-3 bg-cream text-espresso rounded-2xl border placeholder-espresso/40 focus:outline-none focus:ring-2 focus:ring-burnt-orange font-medium text-sm ${errors.email ? 'border-red-500 focus:ring-red-500' : 'border-cream/25'}`}
                     required
                   />
+                  {errors.email && <p className="text-xs text-red-300 font-medium">{errors.email}</p>}
                 </div>
 
                 {/* SPECIAL REQUESTS */}
                 <div className="space-y-2">
-                  <label className="text-xs font-bold tracking-wider uppercase text-cream/90 flex items-center gap-1.5">
+                  <label htmlFor="res-requests" className="text-xs font-bold tracking-wider uppercase text-cream/90 flex items-center gap-1.5">
                     <MessageSquare size={14} /> Special Requests (optional)
                   </label>
                   <textarea
+                    id="res-requests"
                     rows={2}
                     placeholder="Honeymoon brunch, high chair required, tree nut allergy..."
                     value={formData.requests}
@@ -211,6 +225,9 @@ export default function Reservations() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Reservation confirmed"
               className="bg-cream border-4 border-sage p-8 md:p-10 rounded-[32px] shadow-xl max-w-lg mx-auto text-center"
             >
               <div className="w-16 h-16 bg-sage/15 text-sage rounded-full flex items-center justify-center mx-auto mb-6">
@@ -220,7 +237,7 @@ export default function Reservations() {
               <h2 className="font-script text-3xl md:text-4xl font-bold text-terracotta mb-2">
                 Table Reserved!
               </h2>
-              <p className="text-espresso/70 text-xs mb-6 uppercase tracking-widest font-bold">
+              <p className="text-espresso/80 text-xs mb-6 uppercase tracking-widest font-bold">
                 Confirmation Ref: <span className="text-terracotta">{bookingRef}</span>
               </p>
 
