@@ -89,6 +89,7 @@ export default function Header({ currentPage, onPageChange }: HeaderProps) {
           id="header-logo-btn"
           onClick={() => handleNavClick('home')}
           className="flex items-center gap-3 group text-left focus:outline-none"
+          aria-label="Golden Hour Coffee Co. — Go to homepage"
         >
           <div className="w-12 h-12 rounded-full bg-terracotta flex items-center justify-center text-cream shadow-md group-hover:scale-105 transition-transform duration-300">
             <span className="font-script text-3xl font-bold leading-none select-none mt-1">G</span>
@@ -110,7 +111,7 @@ export default function Header({ currentPage, onPageChange }: HeaderProps) {
               key={link.id}
               id={`nav-link-${link.id}`}
               onClick={() => handleNavClick(link.id)}
-              className={`relative py-2 text-sm font-medium tracking-wide transition-colors duration-200 focus:outline-none ${
+              className={`relative py-2 text-sm font-medium tracking-wide transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-terracotta focus:rounded-full px-2 ${
                 currentPage === link.id
                   ? 'text-terracotta font-bold'
                   : 'text-espresso/80 hover:text-terracotta'

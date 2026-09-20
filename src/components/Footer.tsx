@@ -46,25 +46,31 @@ export default function Footer({ onPageChange }: FooterProps) {
             </p>
             <div className="flex items-center gap-4">
               <a
-                href="#instagram"
+                href="https://instagram.com/goldenhourcoffeeco"
                 id="social-instagram"
-                aria-label="Instagram"
+                aria-label="Follow us on Instagram"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-cream/20 hover:border-terracotta bg-cream/5 hover:bg-terracotta flex items-center justify-center text-cream hover:text-cream transition-all duration-300"
               >
                 <Instagram size={18} />
               </a>
               <a
-                href="#facebook"
+                href="https://facebook.com/goldenhourcoffeeco"
                 id="social-facebook"
-                aria-label="Facebook"
+                aria-label="Follow us on Facebook"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-cream/20 hover:border-terracotta bg-cream/5 hover:bg-terracotta flex items-center justify-center text-cream hover:text-cream transition-all duration-300"
               >
                 <Facebook size={18} />
               </a>
               <a
-                href="#twitter"
+                href="https://x.com/goldenhourcoffeeco"
                 id="social-twitter"
-                aria-label="X (Twitter)"
+                aria-label="Follow us on X (Twitter)"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-cream/20 hover:border-terracotta bg-cream/5 hover:bg-terracotta flex items-center justify-center text-cream hover:text-cream transition-all duration-300"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -157,7 +163,7 @@ export default function Footer({ onPageChange }: FooterProps) {
               Stay in the Loop
             </h3>
             <p className="text-cream/80 text-sm leading-relaxed">
-              Sign up to the stir or our newsletter for seasonal specials and neighborhood news.
+              Sign up for our newsletter for seasonal specials and neighborhood news.
             </p>
             {subscribed ? (
               <div className="p-3.5 bg-sage/20 border border-sage/30 rounded-2xl text-cream text-xs">

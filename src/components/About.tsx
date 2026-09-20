@@ -25,7 +25,7 @@ export default function About() {
             </h1>
             <div className="text-espresso/90 text-sm leading-relaxed space-y-4">
               <p>
-                Golden Hour Coffee Co. was born from the shared dream of Maya Chen & Jordan Ellis. After years in the bustling coffee scenes of Seattle and Portland, they found their true home in the warm, warm, sun-drenched streets of East Austin.
+                Golden Hour Coffee Co. was born from the shared dream of Maya Chen & Jordan Ellis. After years in the bustling coffee scenes of Seattle and Portland, they found their true home in the warm, sun-drenched streets of East Austin.
               </p>
               <p>
                 They envisioned a place that wasn't just about the coffee, but about the slow, golden moments of connection that happen over a perfectly brewed cup.
