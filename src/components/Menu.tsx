@@ -38,7 +38,7 @@ export default function Menu() {
           <h1 className="font-script text-5xl md:text-6xl font-bold text-terracotta mb-4">
             Café Menu
           </h1>
-          <p className="text-espresso/70 text-sm max-w-md mx-auto">
+          <p className="text-espresso/80 text-sm max-w-md mx-auto">
             Everything is prepared with love, local ingredients, and served fresh daily in East Austin.
           </p>
         </div>
@@ -85,6 +85,7 @@ export default function Menu() {
                 <img
                   src={item.image}
                   alt={item.name}
+                  loading="lazy"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
@@ -115,7 +116,7 @@ export default function Menu() {
                       ${item.price.toFixed(2)}
                     </span>
                   </div>
-                  <p className="text-espresso/70 text-xs leading-relaxed">
+                  <p className="text-espresso/80 text-xs leading-relaxed">
                     {item.description}
                   </p>
                 </div>

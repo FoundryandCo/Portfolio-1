@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Coffee, MapPin, Clock, ArrowRight, Star, Heart } from 'lucide-react';
+import { Coffee, ArrowRight, Star, Heart } from 'lucide-react';
 import { MenuItem } from '../types';
 import { MENU_ITEMS, TESTIMONIALS } from '../data';
 
@@ -101,7 +101,7 @@ export default function Home({ onPageChange }: HomeProps) {
             <h2 className="font-script text-4xl md:text-5xl font-bold text-terracotta mb-4">
               Featured Dishes
             </h2>
-            <p className="text-espresso/70 text-sm max-w-md mx-auto">
+            <p className="text-espresso/80 text-sm max-w-md mx-auto">
               Made fresh daily with locally-sourced ingredients, served with a golden smile.
             </p>
           </div>
@@ -118,12 +118,13 @@ export default function Home({ onPageChange }: HomeProps) {
               >
                 {/* Image Frame */}
                 <div className="relative aspect-[4/3] overflow-hidden m-3 rounded-[16px] border border-terracotta/5">
-                  <img
-                    src={dish.image}
-                    alt={dish.name}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
+            <img
+              src={dish.image}
+              alt={dish.name}
+              loading="lazy"
+              referrerPolicy="no-referrer"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
                   {dish.tag && (
                     <span className="absolute top-3 left-3 bg-terracotta text-cream text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-sm">
                       {dish.tag}
@@ -139,7 +140,7 @@ export default function Home({ onPageChange }: HomeProps) {
                   <h3 className="font-sans text-lg font-bold text-espresso group-hover:text-terracotta transition-colors">
                     {dish.name}
                   </h3>
-                  <p className="text-espresso/70 text-xs mt-1.5 leading-relaxed min-h-[32px]">
+                  <p className="text-espresso/80 text-xs mt-1.5 leading-relaxed min-h-[32px]">
                     {dish.description}
                   </p>
                 </div>
@@ -181,7 +182,7 @@ export default function Home({ onPageChange }: HomeProps) {
                 </div>
                 <div>
                   <h4 className="font-bold text-sm text-espresso">Locally Roasted Single Origin</h4>
-                  <p className="text-xs text-espresso/70 mt-0.5">Roasting in East Austin every Monday to ensure optimal freshness.</p>
+                  <p className="text-xs text-espresso/80 mt-0.5">Roasting in East Austin every Monday to ensure optimal freshness.</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -190,7 +191,7 @@ export default function Home({ onPageChange }: HomeProps) {
                 </div>
                 <div>
                   <h4 className="font-bold text-sm text-espresso">Warm Friendly Baristas</h4>
-                  <p className="text-xs text-espresso/70 mt-0.5">We know your name and how you take your cappuccino.</p>
+                  <p className="text-xs text-espresso/80 mt-0.5">We know your name and how you take your cappuccino.</p>
                 </div>
               </div>
             </div>
@@ -212,6 +213,7 @@ export default function Home({ onPageChange }: HomeProps) {
                 <img
                   src="https://images.unsplash.com/photo-1497515114629-f71d768fd07c?auto=format&fit=crop&q=80&w=500"
                   alt="Cozy potted plants"
+                  loading="lazy"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />
@@ -220,6 +222,7 @@ export default function Home({ onPageChange }: HomeProps) {
                 <img
                   src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=500"
                   alt="Friends hanging out"
+                  loading="lazy"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />
@@ -230,6 +233,7 @@ export default function Home({ onPageChange }: HomeProps) {
                 <img
                   src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&q=80&w=500"
                   alt="Cafe bench"
+                  loading="lazy"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />
@@ -238,6 +242,7 @@ export default function Home({ onPageChange }: HomeProps) {
                 <img
                   src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&q=80&w=500"
                   alt="Sunlit latte"
+                  loading="lazy"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />

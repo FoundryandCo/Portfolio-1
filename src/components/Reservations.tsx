@@ -69,6 +69,7 @@ export default function Reservations() {
           <img
             src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&q=80&w=1200"
             alt="Table set by window"
+            loading="lazy"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover"
           />

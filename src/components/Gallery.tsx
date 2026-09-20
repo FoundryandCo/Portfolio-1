@@ -15,7 +15,7 @@ export default function Gallery() {
         <h1 className="font-script text-5xl md:text-6xl font-bold text-terracotta mb-4">
           Café Gallery
         </h1>
-        <p className="text-espresso/70 text-sm max-w-md mx-auto">
+        <p className="text-espresso/80 text-sm max-w-md mx-auto">
           A visual taste of our East Austin neighborhood café. Sunshine, rich espresso, and slow cozy mornings.
         </p>
       </div>
@@ -42,6 +42,7 @@ export default function Gallery() {
                     <img
                       src={item.image}
                       alt={item.alt}
+                      loading="lazy"
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover"
                     />
@@ -88,6 +89,7 @@ export default function Gallery() {
                 <img
                   src={post.image}
                   alt={post.alt}
+                  loading="lazy"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
