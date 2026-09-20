@@ -79,7 +79,9 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-bold text-sm text-espresso">Our Address</h3>
-                    <p className="text-xs text-espresso/80 mt-0.5">1214 E 6th St, East Austin, TX</p>
+                    <a href="https://maps.google.com/?q=1214+E+6th+St+East+Austin+TX" target="_blank" rel="noopener noreferrer" className="text-xs text-espresso/80 mt-0.5 hover:text-terracotta hover:underline transition-colors">
+                      1214 E 6th St, East Austin, TX
+                    </a>
                   </div>
                 </div>
 
@@ -101,14 +103,17 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-bold text-sm text-espresso">Phone Number</h3>
-                    <p className="text-xs text-espresso/80 mt-0.5">(512) 555-0148</p>
+                    <a href="tel:+15125550148" className="text-xs text-espresso/80 mt-0.5 hover:text-terracotta hover:underline transition-colors">
+                      (512) 555-0148
+                    </a>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* ARTISTIC STYLIZED INTERACTIVE MAP */}
-            <div className="relative h-[340px] rounded-[32px] overflow-hidden border-4 border-sage shadow-md bg-cream/50">
+            <div className="relative h-[340px] rounded-[32px] overflow-hidden border-4 border-sage shadow-md bg-cream/50" role="img" aria-label="Map showing Golden Hour Coffee Co. location at 1214 E 6th St, East Austin, near Chicon Street and Waller Street, with Colorado River and Forger Park nearby">
+              <span className="sr-only">Golden Hour Coffee Co. is located at 1214 E 6th St, East Austin, TX. Nearby landmarks include Chicon Street, Waller Street, Forger Park, and Colorado River / Lady Bird Lake.</span>
               
               {/* STYLIZED VECTOR MAP BACKGROUND USING SVG / HTML */}
               <div className="absolute inset-0 bg-[#E8E3D7] overflow-hidden select-none">

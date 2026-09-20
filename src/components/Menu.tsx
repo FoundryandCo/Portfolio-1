@@ -44,7 +44,7 @@ export default function Menu() {
         </div>
 
         {/* CATEGORY TABS */}
-        <div className="flex flex-wrap justify-center gap-3 mb-16">
+        <div className="flex flex-wrap justify-center gap-3 mb-16" role="tablist" aria-label="Menu categories">
           {categories.map((cat) => {
             const Icon = cat.icon;
             const isActive = activeTab === cat.id;
@@ -52,6 +52,9 @@ export default function Menu() {
               <button
                 key={cat.id}
                 id={`menu-tab-${cat.id}`}
+                role="tab"
+                aria-selected={isActive}
+                aria-controls={`menu-panel-${cat.id}`}
                 onClick={() => setActiveTab(cat.id as any)}
                 className={`flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-sm border focus:outline-none cursor-pointer ${
                   isActive
@@ -69,6 +72,9 @@ export default function Menu() {
         {/* MENU LIST GRID */}
         <motion.div
           layout
+          role="tabpanel"
+          id={`menu-panel-${activeTab}`}
+          aria-labelledby={`menu-tab-${activeTab}`}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {filteredItems.map((item) => (

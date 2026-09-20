@@ -24,7 +24,13 @@ export default function Header({ currentPage, onPageChange }: HeaderProps) {
 
   // Focus trap and Escape key for mobile menu
   useEffect(() => {
-    if (!isMobileMenuOpen) return;
+    if (!isMobileMenuOpen) {
+      document.body.style.overflow = '';
+      return;
+    }
+
+    // Lock body scroll when mobile menu is open
+    document.body.style.overflow = 'hidden';
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -57,7 +63,10 @@ export default function Header({ currentPage, onPageChange }: HeaderProps) {
     const firstButton = menuNavRef.current?.querySelector<HTMLElement>('button');
     firstButton?.focus();
 
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
   }, [isMobileMenuOpen]);
 
   const navLinks = [

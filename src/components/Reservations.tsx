@@ -217,7 +217,8 @@ export default function Reservations() {
 
               {/* MOCK CALL OUT */}
               <p className="text-center text-cream/70 text-[11px] mt-6 flex items-center justify-center gap-1">
-                <Phone size={11} /> Need help? Call us directly at (512) 555-0148
+                <Phone size={11} /> Need help? Call us directly at{' '}
+                <a href="tel:+15125550148" className="underline hover:text-cream transition-colors">(512) 555-0148</a>
               </p>
             </motion.div>
           ) : (

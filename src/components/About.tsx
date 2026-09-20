@@ -118,9 +118,9 @@ export default function About() {
           <p className="text-xs md:text-sm font-medium tracking-wider flex flex-wrap justify-center items-center gap-2 md:gap-4">
             <span>Open Daily 7AM-3PM</span>
             <span className="hidden sm:inline">•</span>
-            <span>1214 E 6th St, Austin, TX</span>
+            <a href="https://maps.google.com/?q=1214+E+6th+St+East+Austin+TX" target="_blank" rel="noopener noreferrer" className="hover:underline transition-colors">1214 E 6th St, Austin, TX</a>
             <span className="hidden sm:inline">•</span>
-            <span>(512) 555-0148</span>
+            <a href="tel:+15125550148" className="hover:underline transition-colors">(512) 555-0148</a>
             <span className="hidden sm:inline">•</span>
             <span>🐶 Dog Friendly</span>
           </p>
