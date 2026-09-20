@@ -58,7 +58,7 @@ export default function Home({ onPageChange }: HomeProps) {
               <button
                 id="hero-reserve-btn"
                 onClick={() => onPageChange('reservations')}
-                className="w-full sm:w-auto px-8 py-3.5 bg-burnt-orange hover:bg-burnt-orange/95 text-cream font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer"
+                className="w-full sm:w-auto px-8 py-3.5 bg-burnt-orange hover:bg-burnt-orange/95 text-espresso font-semibold rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer"
               >
                 Reserve a Table
               </button>
@@ -199,7 +199,7 @@ export default function Home({ onPageChange }: HomeProps) {
               <button
                 id="about-us-btn"
                 onClick={() => onPageChange('about')}
-                className="px-6 py-3 bg-burnt-orange hover:bg-burnt-orange/90 text-cream font-semibold text-xs uppercase tracking-wider rounded-full shadow-md cursor-pointer"
+                className="px-6 py-3 bg-burnt-orange hover:bg-burnt-orange/90 text-espresso font-semibold text-xs uppercase tracking-wider rounded-full shadow-md cursor-pointer"
               >
                 Our Story
               </button>

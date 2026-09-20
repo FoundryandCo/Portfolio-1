@@ -207,7 +207,7 @@ export default function Reservations() {
                   <button
                     type="submit"
                     id="find-table-submit-btn"
-                    className="w-full py-4 bg-burnt-orange hover:bg-burnt-orange/95 text-cream font-bold text-base rounded-full shadow-md hover:shadow-lg hover:scale-[1.01] transition-all duration-300 cursor-pointer"
+                    className="w-full py-4 bg-burnt-orange hover:bg-burnt-orange/95 text-espresso font-bold text-base rounded-full shadow-md hover:shadow-lg hover:scale-[1.01] transition-all duration-300 cursor-pointer"
                   >
                     Find a Table
                   </button>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Instagram, Facebook, Twitter, Heart } from 'lucide-react';
+import { Instagram, Facebook, Heart } from 'lucide-react';
 
 interface FooterProps {
   onPageChange: (page: string) => void;
@@ -64,10 +64,12 @@ export default function Footer({ onPageChange }: FooterProps) {
               <a
                 href="#twitter"
                 id="social-twitter"
-                aria-label="Twitter"
+                aria-label="X (Twitter)"
                 className="w-10 h-10 rounded-full border border-cream/20 hover:border-terracotta bg-cream/5 hover:bg-terracotta flex items-center justify-center text-cream hover:text-cream transition-all duration-300"
               >
-                <Twitter size={18} />
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
               </a>
             </div>
           </div>
@@ -163,6 +165,9 @@ export default function Footer({ onPageChange }: FooterProps) {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex gap-2">
+                <label htmlFor="newsletter-email-input" className="sr-only">
+                  Email address
+                </label>
                 <input
                   type="email"
                   id="newsletter-email-input"
@@ -175,7 +180,7 @@ export default function Footer({ onPageChange }: FooterProps) {
                 <button
                   type="submit"
                   id="newsletter-submit-btn"
-                  className="px-5 py-2 bg-burnt-orange hover:bg-burnt-orange/90 text-cream text-sm font-semibold rounded-full shadow hover:shadow-md transition-all duration-300 cursor-pointer"
+                  className="px-5 py-2 bg-burnt-orange hover:bg-burnt-orange/90 text-espresso text-sm font-semibold rounded-full shadow hover:shadow-md transition-all duration-300 cursor-pointer"
                 >
                   Join
                 </button>

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, Coffee } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 
 interface HeaderProps {
@@ -10,18 +10,55 @@ interface HeaderProps {
 export default function Header({ currentPage, onPageChange }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const toggleButtonRef = useRef<HTMLButtonElement>(null);
+  const menuNavRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Focus trap and Escape key for mobile menu
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsMobileMenuOpen(false);
+        toggleButtonRef.current?.focus();
+        return;
+      }
+
+      if (e.key === 'Tab' && menuNavRef.current) {
+        const focusable = menuNavRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    // Focus first menu item on open
+    const firstButton = menuNavRef.current?.querySelector<HTMLElement>('button');
+    firstButton?.focus();
+
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isMobileMenuOpen]);
 
   const navLinks = [
     { id: 'home', label: 'Home' },
@@ -60,7 +97,7 @@ export default function Header({ currentPage, onPageChange }: HeaderProps) {
             <span className="block font-script text-2xl font-bold text-terracotta leading-none">
               Golden Hour
             </span>
-            <span className="block text-[10px] tracking-[0.25em] font-bold text-espresso/70 uppercase">
+            <span className="block text-[10px] tracking-[0.25em] font-bold text-espresso/80 uppercase">
               Coffee Co.
             </span>
           </div>
@@ -96,7 +133,7 @@ export default function Header({ currentPage, onPageChange }: HeaderProps) {
           <button
             id="header-reserve-btn"
             onClick={() => handleNavClick('reservations')}
-            className="px-6 py-2.5 bg-burnt-orange hover:bg-burnt-orange/90 text-cream font-medium text-sm rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer"
+            className="px-6 py-2.5 bg-burnt-orange hover:bg-burnt-orange/90 text-espresso font-medium text-sm rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer"
           >
             Reserve a Table
           </button>
@@ -106,9 +143,12 @@ export default function Header({ currentPage, onPageChange }: HeaderProps) {
         <div className="flex md:hidden">
           <button
             id="mobile-menu-toggle"
+            ref={toggleButtonRef}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 text-espresso hover:text-terracotta transition-colors rounded-lg focus:outline-none"
-            aria-label="Toggle Menu"
+            className="p-2 text-espresso hover:text-terracotta transition-colors rounded-lg focus:outline-none focus:ring-2 focus:ring-terracotta"
+            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-nav-menu"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -120,6 +160,8 @@ export default function Header({ currentPage, onPageChange }: HeaderProps) {
         {isMobileMenuOpen && (
           <motion.div
             id="mobile-nav-menu"
+            ref={menuNavRef}
+            role="menu"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -145,7 +187,7 @@ export default function Header({ currentPage, onPageChange }: HeaderProps) {
                 <button
                   id="mobile-nav-reserve-btn"
                   onClick={() => handleNavClick('reservations')}
-                  className="w-full py-3 bg-burnt-orange hover:bg-burnt-orange/90 text-cream font-medium rounded-full shadow text-center block"
+                  className="w-full py-3 bg-burnt-orange hover:bg-burnt-orange/90 text-espresso font-medium rounded-full shadow text-center block"
                 >
                   Reserve a Table
                 </button>

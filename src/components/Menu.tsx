@@ -141,7 +141,7 @@ export default function Menu() {
               We have oat, almond, and soy milk alternatives available. Most of our brunch dishes can be prepared gluten-free or vegan upon request.
             </p>
           </div>
-          <span className="bg-burnt-orange text-cream text-xs font-bold uppercase tracking-widest px-5 py-2.5 rounded-full shadow shrink-0">
+          <span className="bg-burnt-orange text-espresso text-xs font-bold uppercase tracking-widest px-5 py-2.5 rounded-full shadow shrink-0">
             Ask your friendly Barista
           </span>
         </div>
