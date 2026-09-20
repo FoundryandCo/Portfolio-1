@@ -1,9 +1,11 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import { Instagram, Heart, MessageCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Instagram, X } from 'lucide-react';
 import { GALLERY_ITEMS, INSTAGRAM_POSTS } from '../data';
 
 export default function Gallery() {
+  const [lightboxImage, setLightboxImage] = useState<{ src: string; alt: string } | null>(null);
+
   return (
     <div id="gallery-page" className="bg-cream py-16">
       
@@ -44,7 +46,8 @@ export default function Gallery() {
                       alt={item.alt}
                       loading="lazy"
                       referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover cursor-pointer"
+                      onClick={() => setLightboxImage({ src: item.image, alt: item.alt })}
                     />
                     {/* Shadow highlight on hover */}
                     <div className="absolute inset-0 bg-espresso/20 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -61,7 +64,7 @@ export default function Gallery() {
       {/* INSTAGRAM RIBBON */}
       <section className="bg-terracotta text-cream py-14 overflow-hidden border-t-4 border-sage">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-10">
-          <Instagram size={32} className="mx-auto text-cream mb-4 animate-bounce" />
+          <Instagram size={32} className="mx-auto text-cream mb-4" />
           <h2 className="font-script text-3xl md:text-4xl font-bold text-cream mb-2">
             Follow us on Instagram
           </h2>
@@ -94,22 +97,52 @@ export default function Gallery() {
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 
-                {/* Instagram hover overlay with mock likes/comments */}
-                <div className="absolute inset-0 bg-espresso/60 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 text-cream">
-                  <div className="flex items-center gap-1">
-                    <Heart size={16} className="fill-cream" />
-                    <span className="text-xs font-bold">{Math.floor(20 + idx * 8)}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <MessageCircle size={16} className="fill-cream" />
-                    <span className="text-xs font-bold">{Math.floor(2 + idx * 2)}</span>
-                  </div>
+                {/* Instagram hover overlay */}
+                <div className="absolute inset-0 bg-espresso/60 backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <a
+                    href="https://instagram.com/goldenhourcoffeeco"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-cream font-script text-lg hover:underline"
+                  >
+                    View on Instagram
+                  </a>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
+
+      {/* LIGHTBOX */}
+      <AnimatePresence>
+        {lightboxImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-espresso/90 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={() => setLightboxImage(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Image lightbox"
+          >
+            <button
+              onClick={() => setLightboxImage(null)}
+              className="absolute top-4 right-4 text-cream hover:text-terracotta transition-colors"
+              aria-label="Close lightbox"
+            >
+              <X size={32} />
+            </button>
+            <img
+              src={lightboxImage.src}
+              alt={lightboxImage.alt}
+              className="max-w-full max-h-[85vh] rounded-2xl shadow-2xl object-contain"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );

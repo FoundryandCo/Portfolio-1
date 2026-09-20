@@ -39,7 +39,6 @@ export default function Contact() {
       setIsSubmitting(false);
       setIsSuccess(true);
       setFormData({ name: '', email: '', message: '' });
-      setTimeout(() => setIsSuccess(false), 5000);
     }, 1200);
   };
 
